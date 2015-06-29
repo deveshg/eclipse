@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature  id="com.github.deveshg.eclipse.rcp.feature" version="1.0.0.qualifier">
+      <category name="Eclipse RCP Mail App"/>
+   </feature>
+   <category-def name="Eclipse RCP Mail App" label="Eclipse RCP Mail App"/>
+</site>
