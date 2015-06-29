@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+gmf_dashboard/domainGenerationModel=platform\:/resource/com.github.eclipse.emf.filesystem/model/filesystem.genmodel
+gmf_dashboard/domainModel=platform\:/resource/com.github.eclipse.emf.filesystem/model/filesystem.ecore
+gmf_dashboard/generationModel=platform\:/resource/com.github.eclipse.emf.filesystem/model/filesystem.gmfgen
+gmf_dashboard/graphicalDefinitionModel=platform\:/resource/com.github.eclipse.emf.filesystem/model/filesystem.gmfgraph
+gmf_dashboard/mappingModel=platform\:/resource/com.github.eclipse.emf.filesystem/model/filesystem.gmfmap
+gmf_dashboard/option_rcp=*
+gmf_dashboard/toolingDefinitionModel=platform\:/resource/com.github.eclipse.emf.filesystem/model/filesystem.gmftool
