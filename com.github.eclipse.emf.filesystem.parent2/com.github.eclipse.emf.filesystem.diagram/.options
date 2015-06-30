@@ -1,0 +1,7 @@
+# Tracing options for the com.github.eclipse.emf.filesystem.diagram plug-in
+
+# Common issues
+com.github.eclipse.emf.filesystem.diagram/debug=false
+
+# Visual IDs
+com.github.eclipse.emf.filesystem.diagram/debug/visualID=false
