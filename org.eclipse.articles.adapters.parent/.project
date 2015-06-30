@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>org.eclipse.articles.adapters.parent</name>
+	<comment></comment>
+	<projects>
+		<project>org.eclipse.articles.adapters.core</project>
+		<project>org.eclipse.articles.adapters.properties</project>
+		<project>org.eclipse.articles.adapters.ui</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+	</natures>
+</projectDescription>
