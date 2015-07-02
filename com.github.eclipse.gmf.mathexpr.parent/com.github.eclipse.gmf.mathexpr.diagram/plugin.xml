@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.team.core.fileTypes" id="repo-ftype">
+      <?gmfgen generated="true"?>
+      <fileTypes type="text" extension="mathexpr_diagram"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser" id="resource-factory">
+      <?gmfgen generated="true"?>
+      <parser
+         type="mathexpr_diagram"
+         class="org.eclipse.gmf.runtime.emf.core.resources.GMFResourceFactory">
+      </parser>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors" id="gmf-editor">
+      <?gmfgen generated="true"?>
+      <editor
+         id="mathExpr.diagram.part.MathExprDiagramEditorID"
+         name="%editorName"
+         icon="icons/obj16/MathExprDiagramFile.gif"
+         extensions="mathexpr_diagram"
+         default="true"
+         class="mathExpr.diagram.part.MathExprDiagramEditor"
+         matchingStrategy="mathExpr.diagram.part.MathExprMatchingStrategy"
+         contributorClass="mathExpr.diagram.part.MathExprDiagramActionBarContributor">
+      </editor>
+   </extension>
+   
+   <extension point="org.eclipse.ui.contexts" id="ui-context">
+      <?gmfgen generated="true"?>
+      <context
+         description="%context.description"
+         id="mathExpr.diagram.ui.diagramContext"
+         name="%context.name"
+         parentId="org.eclipse.gmf.runtime.diagram.ui.diagramContext">
+      </context>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards" id="creation-wizard">
+      <?gmfgen generated="true"?>
+  	  <wizard
+  	     name="%newWizardName"
+  	     icon="icons/obj16/MathExprDiagramFile.gif"
+  	     category="org.eclipse.ui.Examples"
+  	     class="mathExpr.diagram.part.MathExprCreationWizard"
+  	     id="mathExpr.diagram.part.MathExprCreationWizardID">
+  	  	 <description>%newWizardDesc</description>  
+      </wizard>
+   </extension>
+
+      <extension point="org.eclipse.ui.actionSets" id="init-diagram-action">
+      <?gmfgen generated="true"?>
+      <actionSet
+            label="%initDiagramActionLabel"
+            visible="true"
+            id="com.github.eclipse.gmf.mathexpr.diagram.InitDiagram">
+         <action
+               label="%initDiagramActionLabel"
+               class="mathExpr.diagram.part.MathExprInitDiagramFileAction"
+               menubarPath="file/additions"
+               id="com.github.eclipse.gmf.mathexpr.diagram.InitDiagramAction">
+         </action>
+      </actionSet>
+   </extension>
+	
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.action.globalActionHandlerProviders" id="global-actions">
+      <?gmfgen generated="true"?>
+      <GlobalActionHandlerProvider
+         class="org.eclipse.gmf.runtime.diagram.ui.providers.DiagramGlobalActionHandlerProvider"
+         id="MathExprPresentation">
+         <Priority name="Lowest"/>
+         <ViewId id="mathExpr.diagram.part.MathExprDiagramEditorID">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="delete"/>
+            </ElementType>
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart">
+               <GlobalActionId actionId="save"/>
+            </ElementType>
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="save">
+               </GlobalActionId>
+            </ElementType>        
+         </ViewId>
+      </GlobalActionHandlerProvider>
+      <GlobalActionHandlerProvider
+            class="org.eclipse.gmf.runtime.diagram.ui.render.providers.DiagramUIRenderGlobalActionHandlerProvider"
+            id="MathExprRender">
+         <Priority name="Lowest"/>
+         <ViewId id="mathExpr.diagram.part.MathExprDiagramEditorID">
+            <ElementType class="org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart">
+               <GlobalActionId actionId="cut"/>
+               <GlobalActionId actionId="copy"/>
+               <GlobalActionId actionId="paste"/>
+            </ElementType>
+         </ViewId>
+      </GlobalActionHandlerProvider>
+   </extension>
+
+
+   <extension point="org.eclipse.core.runtime.preferences" id="prefs">
+      <?gmfgen generated="true"?>
+      <initializer class="mathExpr.diagram.preferences.DiagramPreferenceInitializer"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.preferencePages" id="prefpages">
+      <?gmfgen generated="true"?>
+      <page
+            id="com.github.eclipse.gmf.mathexpr.diagram.general"
+            name="%prefpage.com.github.eclipse.gmf.mathexpr.diagram.general"
+            class="mathExpr.diagram.preferences.DiagramGeneralPreferencePage">
+      </page>
+      <page
+            id="com.github.eclipse.gmf.mathexpr.diagram.appearance"
+            name="%prefpage.com.github.eclipse.gmf.mathexpr.diagram.appearance"
+            category="com.github.eclipse.gmf.mathexpr.diagram.general"
+            class="mathExpr.diagram.preferences.DiagramAppearancePreferencePage">
+      </page>
+      <page
+            id="com.github.eclipse.gmf.mathexpr.diagram.connections"
+            name="%prefpage.com.github.eclipse.gmf.mathexpr.diagram.connections"
+            category="com.github.eclipse.gmf.mathexpr.diagram.general"
+            class="mathExpr.diagram.preferences.DiagramConnectionsPreferencePage">
+      </page>
+      <page
+            id="com.github.eclipse.gmf.mathexpr.diagram.printing"
+            name="%prefpage.com.github.eclipse.gmf.mathexpr.diagram.printing"
+            category="com.github.eclipse.gmf.mathexpr.diagram.general"
+            class="mathExpr.diagram.preferences.DiagramPrintingPreferencePage">
+      </page>
+      <page
+            id="com.github.eclipse.gmf.mathexpr.diagram.rulersAndGrid"
+            name="%prefpage.com.github.eclipse.gmf.mathexpr.diagram.rulersAndGrid"
+            category="com.github.eclipse.gmf.mathexpr.diagram.general"
+            class="mathExpr.diagram.preferences.DiagramRulersAndGridPreferencePage">
+      </page>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor" id="prop-contrib">
+      <?gmfgen generated="true"?>
+      <propertyContributor
+            contributorId="com.github.eclipse.gmf.mathexpr.diagram"
+            labelProvider="mathExpr.diagram.sheet.MathExprSheetLabelProvider">
+         <propertyCategory category="domain"/>
+         <propertyCategory category="visual"/>
+         <propertyCategory category="extra"/>
+      </propertyContributor>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs" id="proptabs">
+      <?gmfgen generated="true"?>   
+      <propertyTabs contributorId="com.github.eclipse.gmf.mathexpr.diagram">
+         <propertyTab
+             category="visual"
+             id="property.tab.AppearancePropertySection"
+             label="%tab.appearance"/>
+          <propertyTab
+             category="visual"
+             id="property.tab.DiagramPropertySection"
+             label="%tab.diagram"/>
+          <propertyTab
+             category="domain"
+             id="property.tab.domain"
+             label="%tab.domain"/>
+      </propertyTabs>
+   </extension>
+
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertySections" id="propsections">
+      <?gmfgen generated="true"?>   
+      <propertySections contributorId="com.github.eclipse.gmf.mathexpr.diagram">
+         <propertySection id="property.section.ConnectorAppearancePropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ConnectionEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ConnectionAppearancePropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>
+         <propertySection id="property.section.ShapeColorAndFontPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.ShapeEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.ShapeColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection> 
+         <propertySection id="property.section.DiagramColorsAndFontsPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.appearance.DiagramColorsAndFontsPropertySection" 
+            tab="property.tab.AppearancePropertySection">
+         </propertySection>     
+         <propertySection id="property.section.RulerGridPropertySection" 
+            filter="org.eclipse.gmf.runtime.diagram.ui.properties.filters.DiagramEditPartPropertySectionFilter" 
+            class="org.eclipse.gmf.runtime.diagram.ui.properties.sections.grid.RulerGridPropertySection" 
+            tab="property.tab.DiagramPropertySection">
+         </propertySection>     
+         <propertySection
+            id="property.section.domain" 
+            tab="property.tab.domain"
+            class="mathExpr.diagram.sheet.MathExprPropertySection">
+            <input type="org.eclipse.gmf.runtime.notation.View"/>
+            <input type="org.eclipse.gef.EditPart"/>
+         </propertySection>
+      </propertySections>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.diagram.core.viewProviders" id="view-provider">
+      <?gmfgen generated="true"?>
+      <viewProvider class="mathExpr.diagram.providers.MathExprViewProvider">
+         <Priority name="Lowest"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Diagram" semanticHints="MathExpr"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Node" semanticHints="2001,2002,2003,2004,3001,3002"/>
+         <context viewClass="org.eclipse.gmf.runtime.notation.Edge" semanticHints="4001,4002"/>
+      </viewProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">
+      <?gmfgen generated="true"?>
+      <editpartProvider class="mathExpr.diagram.providers.MathExprEditPartProvider">
+         <Priority name="Lowest"/>
+         <object class="org.eclipse.gmf.runtime.notation.Diagram" id="generated-diagram">
+            <method name="getType()" value="MathExpr"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-nodes">
+            <method name="getType()" value="2001,2002,2003,2004,3001,3002"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Edge" id="generated-links">
+            <method name="getType()" value="4001,4002"/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-labels">
+            <method name="getType()" value=""/>
+         </object>
+         <object class="org.eclipse.gmf.runtime.notation.Node" id="generated-compartments">
+            <method name="getType()" value="7001,7002"/>
+         </object>
+         <context views="generated-diagram,generated-nodes,generated-links,generated-labels,generated-compartments"/>
+      </editpartProvider>
+   </extension>
+
+   
+   <extension point="org.eclipse.gmf.runtime.emf.ui.modelingAssistantProviders" id="modelassist-provider">
+      <?gmfgen generated="true"?>
+      <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfMathDiagramEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.MathDiagramEditPart" id="MathDiagram_1000"/>
+         <context elements="MathDiagram_1000"/>
+      </modelingAssistantProvider>
+            <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfPlusOperatorEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.PlusOperatorEditPart" id="PlusOperator_2001"/>
+         <context elements="PlusOperator_2001"/>
+      </modelingAssistantProvider>
+            <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfMinusOperatorEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.MinusOperatorEditPart" id="MinusOperator_2002"/>
+         <context elements="MinusOperator_2002"/>
+      </modelingAssistantProvider>
+            <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfEntryEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.EntryEditPart" id="Entry_2003"/>
+         <context elements="Entry_2003"/>
+      </modelingAssistantProvider>
+            <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfResultEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.ResultEditPart" id="Result_2004"/>
+         <context elements="Result_2004"/>
+      </modelingAssistantProvider>
+            <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfOperatorInputEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.OperatorInputEditPart" id="OperatorInput_3001"/>
+         <context elements="OperatorInput_3001"/>
+      </modelingAssistantProvider>
+            <modelingAssistantProvider class="mathExpr.diagram.providers.assistants.MathExprModelingAssistantProviderOfOperatorOutputEditPart">
+         <Priority name="Lowest"/>
+         <object class="mathExpr.diagram.edit.parts.OperatorOutputEditPart" id="OperatorOutput_3002"/>
+         <context elements="OperatorOutput_3002"/>
+      </modelingAssistantProvider>
+      
+   </extension>
+
+
+   <extension point="org.eclipse.gmf.runtime.common.ui.services.iconProviders" id="icon-provider">
+      <?gmfgen generated="true"?>
+      <IconProvider class="mathExpr.diagram.providers.MathExprIconProvider">
+         <Priority name="Low"/>
+      </IconProvider>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypes" id="element-types">
+      <?gmfgen generated="true"?>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.MathDiagram_1000"
+               name="%metatype.name.MathDiagram_1000"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="MathDiagram"
+               edithelper="mathExpr.diagram.edit.helpers.MathDiagramEditHelper">
+            <param name="semanticHint" value="1000"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.PlusOperator_2001"
+               name="%metatype.name.PlusOperator_2001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="PlusOperator"
+               edithelper="mathExpr.diagram.edit.helpers.PlusOperatorEditHelper">
+            <param name="semanticHint" value="2001"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.MinusOperator_2002"
+               name="%metatype.name.MinusOperator_2002"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="MinusOperator"
+               edithelper="mathExpr.diagram.edit.helpers.MinusOperatorEditHelper">
+            <param name="semanticHint" value="2002"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.Entry_2003"
+               name="%metatype.name.Entry_2003"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Entry"
+               edithelper="mathExpr.diagram.edit.helpers.EntryEditHelper">
+            <param name="semanticHint" value="2003"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.Result_2004"
+               name="%metatype.name.Result_2004"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="Result"
+               edithelper="mathExpr.diagram.edit.helpers.ResultEditHelper">
+            <param name="semanticHint" value="2004"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.OperatorInput_3001"
+               name="%metatype.name.OperatorInput_3001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="OperatorInput"
+               edithelper="mathExpr.diagram.edit.helpers.OperatorInputEditHelper">
+            <param name="semanticHint" value="3001"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <metamodelType
+               id="com.github.eclipse.gmf.mathexpr.diagram.OperatorOutput_3002"
+               name="%metatype.name.OperatorOutput_3002"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType"
+               eclass="OperatorOutput"
+               edithelper="mathExpr.diagram.edit.helpers.OperatorOutputEditHelper">
+            <param name="semanticHint" value="3002"/>
+         </metamodelType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <specializationType
+               id="com.github.eclipse.gmf.mathexpr.diagram.ResultOperatorOutput_4001"
+               name="%metatype.name.ResultOperatorOutput_4001"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.eclipse.gmf.runtime.emf.type.core.null"/>
+            <param name="semanticHint" value="4001"/>
+         </specializationType>
+      </metamodel>
+      <metamodel nsURI="http://github.com/deveshg/eclipse/math">
+         <specializationType
+               id="com.github.eclipse.gmf.mathexpr.diagram.NumberOperatorInputs_4002"
+               name="%metatype.name.NumberOperatorInputs_4002"
+               kind="org.eclipse.gmf.runtime.emf.type.core.IHintedType">
+            <specializes id="org.eclipse.gmf.runtime.emf.type.core.null"/>
+            <param name="semanticHint" value="4002"/>
+         </specializationType>
+      </metamodel>
+   </extension>
+
+   <extension point="org.eclipse.gmf.runtime.emf.type.core.elementTypeBindings" id="element-types-bindings">
+      <?gmfgen generated="true"?>
+      <clientContext id="com.github.eclipse.gmf.mathexpr.diagram.TypeContext">
+         <enablement>
+            <test
+               property="org.eclipse.gmf.runtime.emf.core.editingDomain"
+               value="com.github.eclipse.gmf.mathexpr.diagram.EditingDomain"/>
+         </enablement>
+      </clientContext> 
+      <binding context="com.github.eclipse.gmf.mathexpr.diagram.TypeContext">
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.MathDiagram_1000"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.PlusOperator_2001"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.MinusOperator_2002"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.Entry_2003"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.Result_2004"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.OperatorInput_3001"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.OperatorOutput_3002"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.ResultOperatorOutput_4001"/>
+         <elementType ref="com.github.eclipse.gmf.mathexpr.diagram.NumberOperatorInputs_4002"/>
+         <advice ref="org.eclipse.gmf.runtime.diagram.core.advice.notationDepdendents"/>
+      </binding>
+   </extension>
+
+   <extension id="MathExprApplication" point="org.eclipse.core.runtime.applications">
+      <?gmfgen generated="true"?>
+      <application>
+         <run class="mathExpr.diagram.application.MathExprApplication"/>
+      </application>
+   </extension>
+
+   <extension point="org.eclipse.ui.perspectives" id="rcp-perspective">
+      <?gmfgen generated="true"?>
+      <perspective
+            id="mathExpr.diagram.MathExprPerspective"
+            name="%perspectiveName"
+            class="mathExpr.diagram.application.DiagramEditorPerspective">
+      </perspective>
+   </extension>
+
+   <extension point="org.eclipse.ui.commands" id="rcp-menu-commands">
+      <?gmfgen generated="true"?>
+      <command
+            name="%openURIActionLabel"
+            description="%openURIActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="com.github.eclipse.gmf.mathexpr.diagram.OpenURICommand"/>  
+      <command
+            name="%openActionLabel"
+            description="%openActionDescription"
+            categoryId="org.eclipse.ui.category.file"
+            id="com.github.eclipse.gmf.mathexpr.diagram.OpenCommand"/>  
+   </extension>
+
+   <extension point="org.eclipse.ui.bindings" id="rcp-command-bindings">
+      <?gmfgen generated="true"?>
+      <key
+            commandId="com.github.eclipse.gmf.mathexpr.diagram.OpenURICommand"
+            sequence="M1+U"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+      <key
+            commandId="com.github.eclipse.gmf.mathexpr.diagram.OpenCommand"
+            sequence="M1+O"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets" id="rcp-actions">
+      <?gmfgen generated="true"?>
+      <actionSet
+            label="%applicationActionSetLabel"
+            visible="true"
+            id="com.github.eclipse.gmf.mathexpr.diagram.ActionSet">
+         <action
+               label="%newDiagramActionLabel"
+               class="mathExpr.diagram.application.DiagramEditorActionBarAdvisor$NewDiagramAction"
+               menubarPath="file/new/additions"
+               id="com.github.eclipse.gmf.mathexpr.diagram.NewDiagramAction">
+         </action>
+         <action
+               label="%aboutActionLabel"
+               class="mathExpr.diagram.application.DiagramEditorActionBarAdvisor$AboutAction"
+               menubarPath="help/additions"
+               id="com.github.eclipse.gmf.mathexpr.diagram.AboutAction">
+         </action>
+         <action
+               label="%openURIActionLabel"
+               definitionId="com.github.eclipse.gmf.mathexpr.diagram.OpenURICommand"
+               class="mathExpr.diagram.application.DiagramEditorActionBarAdvisor$OpenURIAction"
+               menubarPath="file/additions"
+               id="com.github.eclipse.gmf.mathexpr.diagram.OpenURIAction">
+         </action>
+         <action
+               label="%openActionLabel"
+               definitionId="com.github.eclipse.gmf.mathexpr.diagram.OpenCommand"
+               class="mathExpr.diagram.application.DiagramEditorActionBarAdvisor$OpenAction"
+               menubarPath="file/additions"
+               id="com.github.eclipse.gmf.mathexpr.diagram.OpenAction">
+         </action>
+      </actionSet>
+   </extension>
+   <extension point="org.eclipse.ui.commands" id="update-cmd">
+      <?gmfgen generated="true"?>
+      <command
+         categoryId="org.eclipse.ui.category.edit"
+         defaultHandler="mathExpr.diagram.part.MathExprDiagramUpdateCommand"
+         description="%update.diagram.description"
+         id="mathExpr.diagram.updateDiagram"
+         name="%update.diagram.name"/>
+   </extension>
+   
+   <extension point="org.eclipse.ui.bindings" id="update-cmd-binding">
+      <?gmfgen generated="true"?>
+      <key 
+         commandId="mathExpr.diagram.updateDiagram"
+         contextId="mathExpr.diagram.ui.diagramContext"
+         schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+         sequence="F5"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.menus" id="context-menus">
+      <?gmfgen generated="true"?>
+      <!-- menuContribution locationURI="menu:org.eclipse.ui.main.menu?after=">
+      </menuContribution>
+      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar?after=">
+      </menuContribution -->
+      <menuContribution locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu">
+         <command commandId="com.github.eclipse.gmf.mathexpr.diagram.LoadResourceAction">
+            <visibleWhen>
+               <and>
+                  <with variable="activePartId"><equals value="mathExpr.diagram.part.MathExprDiagramEditorID"/></with>
+                  <with variable="selection"><iterate ifEmpty="false"> 
+                     <instanceof value="mathExpr.diagram.edit.parts.MathDiagramEditPart"/>
+                  </iterate></with>
+               </and>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+
+   <extension point="org.eclipse.ui.commands" id="menu-commands">
+      <?gmfgen generated="true"?>
+      <category id="mathExpr.diagram.part.MathExprDiagramEditorID" name="%cmdcategory.name" description="%cmdcategory.desc"/>
+      <command id="com.github.eclipse.gmf.mathexpr.diagram.LoadResourceAction"
+         name="Load Resource"
+         categoryId="mathExpr.diagram.part.MathExprDiagramEditorID"
+         defaultHandler="mathExpr.diagram.part.LoadResourceAction"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.handlers" id="menu-handlers">
+      <?gmfgen generated="true"?>
+   </extension>
+
+   <!-- optionally, specify keybindings -->
+</plugin>

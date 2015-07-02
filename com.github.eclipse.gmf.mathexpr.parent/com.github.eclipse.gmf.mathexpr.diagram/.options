@@ -1,0 +1,7 @@
+# Tracing options for the com.github.eclipse.gmf.mathexpr.diagram plug-in
+
+# Common issues
+com.github.eclipse.gmf.mathexpr.diagram/debug=false
+
+# Visual IDs
+com.github.eclipse.gmf.mathexpr.diagram/debug/visualID=false

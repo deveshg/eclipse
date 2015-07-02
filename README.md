@@ -1,1 +1,1 @@
-# eclipse projects
+Eclipse Plugin Development Examples

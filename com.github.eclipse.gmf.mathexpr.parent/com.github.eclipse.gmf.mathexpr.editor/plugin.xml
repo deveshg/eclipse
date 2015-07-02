@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated MathExpr -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="mathExpr.presentation.MathExprModelWizardID"
+            name="%_UI_MathExprModelWizard_label"
+            class="mathExpr.presentation.MathExprModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/MathExprModelFile.gif">
+         <description>%_UI_MathExprModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated MathExpr -->
+      <editor
+            id="mathExpr.presentation.MathExprEditorID"
+            name="%_UI_MathExprEditor_label"
+            icon="icons/full/obj16/MathExprModelFile.gif"
+            extensions="mathexpr"
+            class="mathExpr.presentation.MathExprEditor"
+            contributorClass="mathExpr.presentation.MathExprActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>
