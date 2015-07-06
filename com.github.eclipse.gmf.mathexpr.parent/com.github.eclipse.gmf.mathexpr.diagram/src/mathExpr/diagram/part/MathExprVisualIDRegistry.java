@@ -207,6 +207,16 @@ public class MathExprVisualIDRegistry {
 				return true;
 			}
 			break;
+		case mathExpr.diagram.edit.parts.EntryEditPart.VISUAL_ID:
+			if (mathExpr.diagram.edit.parts.EntryValueEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
+		case mathExpr.diagram.edit.parts.ResultEditPart.VISUAL_ID:
+			if (mathExpr.diagram.edit.parts.ResultValueEditPart.VISUAL_ID == nodeVisualID) {
+				return true;
+			}
+			break;
 		case mathExpr.diagram.edit.parts.PlusOperatorPlusOperatorFigureCompartmentEditPart.VISUAL_ID:
 			if (mathExpr.diagram.edit.parts.OperatorInputEditPart.VISUAL_ID == nodeVisualID) {
 				return true;

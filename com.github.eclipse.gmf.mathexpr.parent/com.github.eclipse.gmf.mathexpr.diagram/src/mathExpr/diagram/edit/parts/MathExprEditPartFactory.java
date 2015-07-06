@@ -35,8 +35,14 @@ public class MathExprEditPartFactory implements EditPartFactory {
 			case mathExpr.diagram.edit.parts.EntryEditPart.VISUAL_ID:
 				return new mathExpr.diagram.edit.parts.EntryEditPart(view);
 
+			case mathExpr.diagram.edit.parts.EntryValueEditPart.VISUAL_ID:
+				return new mathExpr.diagram.edit.parts.EntryValueEditPart(view);
+
 			case mathExpr.diagram.edit.parts.ResultEditPart.VISUAL_ID:
 				return new mathExpr.diagram.edit.parts.ResultEditPart(view);
+
+			case mathExpr.diagram.edit.parts.ResultValueEditPart.VISUAL_ID:
+				return new mathExpr.diagram.edit.parts.ResultValueEditPart(view);
 
 			case mathExpr.diagram.edit.parts.OperatorInputEditPart.VISUAL_ID:
 				return new mathExpr.diagram.edit.parts.OperatorInputEditPart(

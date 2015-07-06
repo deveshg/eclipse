@@ -13,3 +13,4 @@ Export-Package: mathExpr,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: mathExpr.core.MathCorePlugin

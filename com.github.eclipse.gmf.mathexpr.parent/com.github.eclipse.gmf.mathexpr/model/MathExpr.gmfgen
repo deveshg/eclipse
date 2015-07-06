@@ -148,6 +148,24 @@
         <childMetaFeature
             href="MathExpr.genmodel#//mathExpr/MathDiagram/entries"/>
       </modelFacet>
+      <labels
+          visualID="5001"
+          editPartClassName="EntryValueEditPart"
+          itemSemanticEditPolicyClassName="EntryValueItemSemanticEditPolicy"
+          elementIcon="true">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:ParentAssignedViewmap"
+            getterName="getFigureEntryValueFigure"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            parser="//@labelParsers/@implementations.0">
+          <metaFeatures
+              href="MathExpr.genmodel#//mathExpr/Number/value"/>
+        </modelFacet>
+      </labels>
     </topLevelNodes>
     <topLevelNodes
         visualID="2004"
@@ -174,6 +192,25 @@
         <childMetaFeature
             href="MathExpr.genmodel#//mathExpr/MathDiagram/results"/>
       </modelFacet>
+      <labels
+          visualID="5002"
+          editPartClassName="ResultValueEditPart"
+          itemSemanticEditPolicyClassName="ResultValueItemSemanticEditPolicy"
+          readOnly="true"
+          elementIcon="true">
+        <diagramRunTimeClass
+            href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
+        <viewmap
+            xsi:type="gmfgen:ParentAssignedViewmap"
+            getterName="getFigureResultValueFigure"
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
+        <modelFacet
+            xsi:type="gmfgen:FeatureLabelModelFacet"
+            parser="//@labelParsers/@implementations.0">
+          <metaFeatures
+              href="MathExpr.genmodel#//mathExpr/Number/value"/>
+        </modelFacet>
+      </labels>
     </topLevelNodes>
     <links
         visualID="4001"
@@ -569,6 +606,12 @@
   </application>
   <domainGenModel
       href="MathExpr.genmodel#/"/>
+  <labelParsers
+      extensibleViaService="true">
+    <implementations
+        xsi:type="gmfgen:PredefinedParser"
+        uses="//@diagram/@topLevelNodes.2/@labels.0/@modelFacet //@diagram/@topLevelNodes.3/@labels.0/@modelFacet"/>
+  </labelParsers>
   <contextMenus
       context="//@diagram">
     <items

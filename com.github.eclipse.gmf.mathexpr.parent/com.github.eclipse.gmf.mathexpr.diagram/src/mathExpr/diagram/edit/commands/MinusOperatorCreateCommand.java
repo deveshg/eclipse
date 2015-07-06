@@ -1,9 +1,5 @@
 package mathExpr.diagram.edit.commands;
 
-import mathExpr.MathDiagram;
-import mathExpr.MathExprFactory;
-import mathExpr.MinusOperator;
-
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -50,46 +46,21 @@ public class MinusOperatorCreateCommand extends EditElementCommand {
 	}
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
 	protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
 			IAdaptable info) throws ExecutionException {
-		MinusOperator newElement = MathExprFactory.eINSTANCE.createMinusOperator();
- 
-		// Adds both operator inputs
-		newElement.getInputs().add(MathExprFactory.eINSTANCE.createOperatorInput());
-		newElement.getInputs().add(MathExprFactory.eINSTANCE.createOperatorInput());
- 
-		// Adds the operator output
-		newElement.setOutput(MathExprFactory.eINSTANCE.createOperatorOutput());
- 
-		MathDiagram owner = (MathDiagram) getElementToEdit();
+		mathExpr.MinusOperator newElement = mathExpr.MathExprFactory.eINSTANCE
+				.createMinusOperator();
+
+		mathExpr.MathDiagram owner = (mathExpr.MathDiagram) getElementToEdit();
 		owner.getOperators().add(newElement);
- 
+
 		doConfigure(newElement, monitor, info);
- 
+
 		((CreateElementRequest) getRequest()).setNewElement(newElement);
 		return CommandResult.newOKCommandResult(newElement);
 	}
-	
-	
-	
-//	/**
-//	 * @generated
-//	 */
-//	protected CommandResult doExecuteWithResult(IProgressMonitor monitor,
-//			IAdaptable info) throws ExecutionException {
-//		mathExpr.MinusOperator newElement = mathExpr.MathExprFactory.eINSTANCE
-//				.createMinusOperator();
-//
-//		mathExpr.MathDiagram owner = (mathExpr.MathDiagram) getElementToEdit();
-//		owner.getOperators().add(newElement);
-//
-//		doConfigure(newElement, monitor, info);
-//
-//		((CreateElementRequest) getRequest()).setNewElement(newElement);
-//		return CommandResult.newOKCommandResult(newElement);
-//	}
 
 	/**
 	 * @generated

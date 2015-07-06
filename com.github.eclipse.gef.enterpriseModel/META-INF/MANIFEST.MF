@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EnterpriseModel
+Bundle-SymbolicName: com.github.eclipse.gef.enterpriseModel;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.github.eclipse.gef.enterprisemodel.Activator
+Bundle-Vendor: GITHUB
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.scala-lang.scala-library,
+ org.eclipse.ui.editors;bundle-version="3.8.100",
+ org.eclipse.gef;bundle-version="3.9.0",
+ org.eclipse.gmf.runtime.gef.ui;bundle-version="1.7.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy

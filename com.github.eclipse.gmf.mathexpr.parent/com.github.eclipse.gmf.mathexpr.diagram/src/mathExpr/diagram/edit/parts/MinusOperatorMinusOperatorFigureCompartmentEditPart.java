@@ -1,11 +1,6 @@
 package mathExpr.diagram.edit.parts;
 
-import mathExpr.diagram.edit.parts.custom.MinusRoundedRectangle;
-import mathExpr.diagram.edit.parts.custom.OperatorCompartmentFigureListener;
-
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.XYLayout;
-import org.eclipse.draw2d.geometry.Insets;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.Request;
@@ -55,31 +50,12 @@ public class MinusOperatorMinusOperatorFigureCompartmentEditPart extends
 	}
 
 	/**
-	 * @generated NOT
+	 * @generated
 	 */
 	public IFigure createFigure() {
 		ResizableCompartmentFigure result = (ResizableCompartmentFigure) super
 				.createFigure();
 		result.setTitleVisibility(false);
- 
-		// Setup for a XYLayout
-		IFigure contentPane = result.getContentPane();
-		contentPane.setLayoutManager(new XYLayout());
- 
-		// Delete content pane insets
-		Insets is = contentPane.getInsets();
-		is.top = 0;
-		is.bottom = 0;
-		is.left = 0;
-		is.right = 0;
- 
-		// Setup graphical elements
-		MinusRoundedRectangle roundedRectangle = new MinusRoundedRectangle();
-		contentPane.add(roundedRectangle);
- 
-		// Add the resize events listener
-		result.addFigureListener(new OperatorCompartmentFigureListener(this, roundedRectangle));
- 
 		return result;
 	}
 

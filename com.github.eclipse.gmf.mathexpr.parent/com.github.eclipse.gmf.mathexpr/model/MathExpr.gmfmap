@@ -88,6 +88,13 @@
     <ownedChild>
       <domainMetaElement
           href="MathExpr.ecore#//Entry"/>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping">
+        <diagramLabel
+            href="MathExpr.gmfgraph#EntryValue"/>
+        <features
+            href="MathExpr.ecore#//Number/value"/>
+      </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
           href="MathExpr.gmftool#//@palette/@tools.0/@tools.0"/>
@@ -101,6 +108,14 @@
     <ownedChild>
       <domainMetaElement
           href="MathExpr.ecore#//Result"/>
+      <labelMappings
+          xsi:type="gmfmap:FeatureLabelMapping"
+          readOnly="true">
+        <diagramLabel
+            href="MathExpr.gmfgraph#ResultValue"/>
+        <features
+            href="MathExpr.ecore#//Number/value"/>
+      </labelMappings>
       <tool
           xsi:type="gmftool:CreationTool"
           href="MathExpr.gmftool#//@palette/@tools.0/@tools.5"/>
