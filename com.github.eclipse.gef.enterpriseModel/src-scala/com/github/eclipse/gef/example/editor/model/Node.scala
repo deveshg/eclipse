@@ -1,23 +1,31 @@
 package com.github.eclipse.gef.example.editor.model
 
-import org.eclipse.draw2d.geometry.Rectangle
-import scala.collection.mutable.ListBuffer
-import java.beans.PropertyChangeSupport
 import java.beans.PropertyChangeListener
+import java.beans.PropertyChangeSupport
 
-class Node {
+import org.eclipse.core.runtime.IAdaptable
+import org.eclipse.draw2d.geometry.Rectangle
+import org.eclipse.ui.views.properties.IPropertySource
+
+class Node extends IAdaptable {
 
   import Node._
 
-  private var name: String = "Unknown"
+  private var name: String = "Unknown" //$NON-NLS-1$
   private var layout: Rectangle = new Rectangle(10, 10, 100, 100)
   private var listeners = new PropertyChangeSupport(this);
 
   private var parent: Node = null
   private var children = new java.util.ArrayList[Node]
 
+  private var propertySource: IPropertySource = _
+
   def getName(): String = this.name
-  def setName(newName: String): Unit = this.name = newName
+  def setName(newName: String): Unit = {
+    val oldName = this.name
+    this.name = newName
+    getListeners().firePropertyChange(Node.PROPERTY_RENAME, oldName, newName);
+  }
 
   def getLayout(): Rectangle = this.layout
 
@@ -31,9 +39,6 @@ class Node {
   def setParent(newParent: Node): Unit = this.parent = newParent
 
   def addChild(child: Node): Boolean = {
-
-    this.children.add(child)
-
     val b = this.children.add(child);
     if (b) {
       child.setParent(Node.this);
@@ -60,10 +65,21 @@ class Node {
 
   def getListeners(): PropertyChangeSupport = this.listeners
 
+  override def getAdapter(adapter: Class[_]): AnyRef = {
+    if (adapter == classOf[IPropertySource]) {
+      if (propertySource == null)
+        propertySource = new NodePropertySource(this)
+      return propertySource
+    } else
+      return null
+  }
+
 }
 
 object Node {
   val PROPERTY_LAYOUT = "NodeLayout";
   val PROPERTY_ADD = "NodeAddChild";
   val PROPERTY_REMOVE = "NodeRemoveChild";
+  val PROPERTY_RENAME = "NodeRENAME"
+
 }

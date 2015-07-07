@@ -30,8 +30,14 @@ class EmployePart extends AppAbstractEditPart {
     getModel().asInstanceOf[Employe].getChildrenArray()
 
   override def propertyChange(evt: PropertyChangeEvent) = {
-    if (evt.getPropertyName().equals(Node.PROPERTY_LAYOUT)) 
+    if (evt.getPropertyName().equals(Node.PROPERTY_LAYOUT))
       refreshVisuals();
-    
+
+    if (evt.getPropertyName().equals(Node.PROPERTY_RENAME))
+      refreshVisuals();
+
+    if (evt.getPropertyName().equals(Employe.PROPERTY_FIRSTNAME))
+      refreshVisuals();
+
   }
 }

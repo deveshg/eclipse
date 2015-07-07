@@ -4,6 +4,7 @@ import org.eclipse.gef.commands.Command
 import com.github.eclipse.gef.example.editor.model.Node
 
 class DeleteCommand extends Command {
+  
   private var model: Node = _
   private var parentModel: Node = _;
 

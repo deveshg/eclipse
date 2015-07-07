@@ -13,7 +13,7 @@ class ServiceChangeLayoutCommand extends AbstractLayoutCommand {
 
   def setConstraint(rect: Rectangle): Unit = this.layout = rect
 
-   def setModel(model: Any): Unit = {
+  def setModel(model: Any): Unit = {
     this.model = model.asInstanceOf[Service]
     this.oldLayout = model.asInstanceOf[Service].getLayout()
   }

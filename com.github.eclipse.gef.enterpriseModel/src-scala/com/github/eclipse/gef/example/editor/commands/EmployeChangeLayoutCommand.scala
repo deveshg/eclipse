@@ -8,6 +8,7 @@ class EmployeChangeLayoutCommand extends AbstractLayoutCommand {
   private var model: Employe = _
   private var layout: Rectangle = _
   private var oldLayout: Rectangle = _
+
   override def execute(): Unit = model.setLayout(layout)
 
   def setConstraint(rect: Rectangle): Unit = this.layout = rect

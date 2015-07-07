@@ -37,10 +37,6 @@ class ServiceFigure extends Figure {
       randomInt128(),
       randomInt128()))
 
-    setBackgroundColor(new Color(null,
-      randomInt128() + 128,
-      randomInt128() + 128,
-      randomInt128() + 128))
 
     setBorder(new LineBorder(1));
     setOpaque(true);
@@ -48,7 +44,9 @@ class ServiceFigure extends Figure {
 
   def setName(text: String): Unit = labelName.setText(text)
   def setEtage(etage: Int): Unit = labelEtage.setText("Etage:" + etage)
-  
+
+  def setColor(color: Color): Unit = setBackgroundColor(color)
+
   def setLayout(rect: Rectangle): Unit = getParent().setConstraint(ServiceFigure.this, rect);
 
 }

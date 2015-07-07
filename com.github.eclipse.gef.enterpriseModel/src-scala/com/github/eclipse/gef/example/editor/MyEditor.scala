@@ -1,37 +1,51 @@
 package com.github.eclipse.gef.example.editor
 
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.draw2d.LightweightSystem
+import org.eclipse.draw2d.Viewport
+import org.eclipse.draw2d.parts.ScrollableThumbnail
 import org.eclipse.gef.DefaultEditDomain
-import org.eclipse.gef.ui.parts.GraphicalEditor
-import com.github.eclipse.gef.example.editor.parts.AppEditPartFactory
-import com.github.eclipse.gef.example.util.EntrepriseData
-import org.eclipse.gef.editparts.ScalableRootEditPart
-import org.eclipse.gef.ui.actions.ZoomInAction
-import java.util.ArrayList
-import org.eclipse.gef.editparts.ZoomManager
-import org.eclipse.gef.ui.actions.ZoomOutAction
-import org.eclipse.swt.SWT
 import org.eclipse.gef.KeyHandler
-import org.eclipse.gef.MouseWheelHandler
 import org.eclipse.gef.KeyStroke
+import org.eclipse.gef.LayerConstants
+import org.eclipse.gef.MouseWheelHandler
 import org.eclipse.gef.MouseWheelZoomHandler
+import org.eclipse.gef.editparts.ScalableRootEditPart
+import org.eclipse.gef.editparts.ZoomManager
 import org.eclipse.gef.ui.actions.GEFActionConstants
+import org.eclipse.gef.ui.actions.ZoomInAction
+import org.eclipse.gef.ui.actions.ZoomOutAction
+import org.eclipse.gef.ui.parts.ContentOutlinePage
+import org.eclipse.gef.ui.parts.GraphicalEditor
+import org.eclipse.swt.SWT
+import org.eclipse.swt.custom.SashForm
+import org.eclipse.swt.events.DisposeEvent
+import org.eclipse.swt.events.DisposeListener
+import org.eclipse.swt.widgets.Canvas
+import org.eclipse.swt.widgets.Composite
+import org.eclipse.swt.widgets.Control
 import org.eclipse.ui.actions.ActionFactory
-import java.util.Arrays
+import org.eclipse.ui.part.IPageSite
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage
+
+import com.github.eclipse.gef.example.editor.parts.AppEditPartFactory
+import com.github.eclipse.gef.example.editor.parts.tree.AppTreeEditPartFactory
+import com.github.eclipse.gef.example.util.EntrepriseData
 
 class MyEditor extends GraphicalEditor {
+
+  var model = EntrepriseData.getFakeEnterprise()
+  var keyHandler: KeyHandler = _
 
   {
     setEditDomain(new DefaultEditDomain(MyEditor.this))
   }
 
-  def doSave(pm: IProgressMonitor): Unit = {
-
-  }
+  def doSave(pm: IProgressMonitor): Unit = {}
 
   protected def initializeGraphicalViewer(): Unit = {
     val viewer = getGraphicalViewer()
-    viewer.setContents(EntrepriseData.getFakeEnterprise())
+    viewer.setContents(model)
   }
 
   protected override def configureGraphicalViewer(): Unit = {
@@ -43,6 +57,10 @@ class MyEditor extends GraphicalEditor {
     configureMyEditorZoomLevel()
 
     configureMyEditorKeyHandler()
+
+    val provider = new AppContextMenuProvider(viewer,
+      getActionRegistry());
+    viewer.setContextMenu(provider);
   }
 
   def configureMyEditorZoomLevel(): Unit = {
@@ -62,16 +80,16 @@ class MyEditor extends GraphicalEditor {
     manager.setZoomLevels(zoomLevels);
 
     var zoomContributions = Array(
-        ZoomManager.FIT_ALL, 
-        ZoomManager.FIT_HEIGHT, 
-        ZoomManager.FIT_WIDTH)
-    
-    manager.setZoomLevelContributions(Arrays.asList(zoomContributions));
+      ZoomManager.FIT_ALL,
+      ZoomManager.FIT_HEIGHT,
+      ZoomManager.FIT_WIDTH)
+
+    //  manager.setZoomLevelContributions(Arrays.asList(zoomContributions));
 
   }
 
   def configureMyEditorKeyHandler(): Unit = {
-    val keyHandler = new KeyHandler();
+    keyHandler = new KeyHandler();
     keyHandler.put(
       KeyStroke.getPressed(SWT.DEL, 127, 0),
       getActionRegistry().getAction(ActionFactory.DELETE.getId()));
@@ -89,11 +107,90 @@ class MyEditor extends GraphicalEditor {
   }
 
   override def getAdapter(adapter: Class[_]): AnyRef = {
-    if (adapter.isInstanceOf[ZoomManager])
-      return getGraphicalViewer().getRootEditPart().asInstanceOf[ScalableRootEditPart]
-        .getZoomManager()
+
+    var ref: AnyRef = null
+
+    if (adapter == classOf[ZoomManager])
+      getGraphicalViewer().getRootEditPart().asInstanceOf[ScalableRootEditPart].getZoomManager()
+    else if (adapter == classOf[IContentOutlinePage])
+      new OutlinePage()
     else
-      return super.getAdapter(adapter);
+      super.getAdapter(adapter)
+  }
+
+  class OutlinePage extends ContentOutlinePage(new org.eclipse.gef.ui.parts.TreeViewer) {
+
+    var sash: SashForm = _
+    var thumbnail: ScrollableThumbnail = _
+    var disposeListener: DisposeListener = _
+
+    override def createControl(parent: Composite): Unit = {
+
+      sash = new SashForm(parent, SWT.VERTICAL);
+
+      getViewer().createControl(sash);
+      getViewer().setEditDomain(getEditDomain());
+      getViewer().setEditPartFactory(new AppTreeEditPartFactory());
+      getViewer().setContents(MyEditor.this.model);
+      getSelectionSynchronizer().addViewer(getViewer());
+
+      createMinimizedView()
+    }
+
+    override def init(pageSite: IPageSite): Unit = {
+      super.init(pageSite);
+      // On hook les actions de l'editeur sur la toolbar
+      val bars = getSite().getActionBars();
+
+      bars.setGlobalActionHandler(ActionFactory.UNDO.getId(),
+        getActionRegistry().getAction(ActionFactory.UNDO.getId()));
+      bars.setGlobalActionHandler(ActionFactory.REDO.getId(),
+        getActionRegistry().getAction(ActionFactory.REDO.getId()));
+      bars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
+        getActionRegistry().getAction(ActionFactory.DELETE.getId()));
+      bars.updateActionBars();
+
+      getViewer().setKeyHandler(keyHandler);
+
+      val provider = new AppContextMenuProvider(getViewer(),
+        getActionRegistry());
+      getViewer().setContextMenu(provider);
+    }
+
+    private def createMinimizedView(): Unit = {
+      val canvas = new Canvas(sash, SWT.BORDER);
+      val lws = new LightweightSystem(canvas);
+
+      val rootEditPart = getGraphicalViewer().getRootEditPart().asInstanceOf[ScalableRootEditPart]
+
+      thumbnail = new ScrollableThumbnail(rootEditPart.getFigure().asInstanceOf[Viewport])
+      thumbnail.setSource(rootEditPart.getLayer(LayerConstants.PRINTABLE_LAYERS));
+
+      lws.setContents(thumbnail);
+
+      disposeListener = new DisposeListener() {
+        override def widgetDisposed(e: DisposeEvent): Unit = {
+          if (thumbnail != null) {
+            thumbnail.deactivate();
+            thumbnail = null;
+          }
+        }
+      }
+      getGraphicalViewer().getControl().addDisposeListener(disposeListener);
+    }
+
+    override def getControl(): Control = sash
+
+    override def dispose(): Unit = {
+
+      getSelectionSynchronizer().removeViewer(getViewer());
+
+      if (getGraphicalViewer().getControl() != null && !getGraphicalViewer().getControl().isDisposed())
+        getGraphicalViewer().getControl().removeDisposeListener(disposeListener);
+
+      super.dispose();
+    }
+
   }
 
 }

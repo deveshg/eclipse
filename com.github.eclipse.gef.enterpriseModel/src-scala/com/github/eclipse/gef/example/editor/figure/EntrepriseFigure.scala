@@ -12,6 +12,7 @@ class EntrepriseFigure extends Figure {
   private val labelName = new Label()
   private val labelAddress = new Label()
   private val labelCapital = new Label()
+  
   private[this] var layout: XYLayout = _
 
   {
@@ -42,13 +43,10 @@ class EntrepriseFigure extends Figure {
 
   def setCapital(capital: Int): Unit = {
 
-    var cap = () => new StringBuilder()
-      .append("Capital :")
-      .append(capital)
-      .toString
-
-    labelCapital.setText(cap())
-
+    var getCaptialText = () => StringBuilder.newBuilder.append("Capital :").append(capital).toString
+    
+    labelCapital.setText(getCaptialText())
+    
   }
 
 }

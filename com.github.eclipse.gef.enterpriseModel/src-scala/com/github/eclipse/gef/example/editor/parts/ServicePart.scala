@@ -26,6 +26,7 @@ class ServicePart extends AppAbstractEditPart {
     figure.setName(model.getName());
     figure.setEtage(model.getEtage());
     figure.setLayout(model.getLayout());
+    figure.setColor(model.getColor());
   }
 
   override def getModelChildren(): java.util.List[_] =
@@ -37,5 +38,12 @@ class ServicePart extends AppAbstractEditPart {
     if (evt.getPropertyName().equals(Node.PROPERTY_ADD)) refreshChildren();
 
     if (evt.getPropertyName().equals(Node.PROPERTY_REMOVE)) refreshChildren();
+
+    if (evt.getPropertyName().equals(Node.PROPERTY_RENAME)) refreshVisuals();
+
+    if (evt.getPropertyName().equals(Service.PROPERTY_COLOR)) refreshVisuals();
+
+    if (evt.getPropertyName().equals(Service.PROPERTY_FLOOR)) refreshVisuals();
+
   }
 }
