@@ -37,7 +37,6 @@ class ServiceFigure extends Figure {
       randomInt128(),
       randomInt128()))
 
-
     setBorder(new LineBorder(1));
     setOpaque(true);
   }
@@ -49,4 +48,9 @@ class ServiceFigure extends Figure {
 
   def setLayout(rect: Rectangle): Unit = getParent().setConstraint(ServiceFigure.this, rect);
 
+}
+
+object ServiceFigure {
+  val SERVICE_FIGURE_DEFWIDTH = 250;
+  val SERVICE_FIGURE_DEFHEIGHT = 150;
 }

@@ -6,13 +6,15 @@ import org.eclipse.draw2d.Label
 import org.eclipse.draw2d.ColorConstants
 import org.eclipse.draw2d.geometry.Rectangle
 import org.eclipse.draw2d.LineBorder
+import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder
+import org.eclipse.draw2d.Graphics
 
 class EntrepriseFigure extends Figure {
 
   private val labelName = new Label()
   private val labelAddress = new Label()
   private val labelCapital = new Label()
-  
+
   private[this] var layout: XYLayout = _
 
   {
@@ -32,7 +34,10 @@ class EntrepriseFigure extends Figure {
     setConstraint(labelCapital, new Rectangle(5, 30, -1, -1));
 
     setForegroundColor(ColorConstants.black);
-    setBorder(new LineBorder(5));
+
+    var border = new LineBorder(2)
+    border.setStyle(Graphics.LINE_DASHDOTDOT)
+    setBorder(border);
   }
 
   def setLayout(rect: Rectangle): Unit = setBounds(rect)
@@ -44,9 +49,9 @@ class EntrepriseFigure extends Figure {
   def setCapital(capital: Int): Unit = {
 
     var getCaptialText = () => StringBuilder.newBuilder.append("Capital :").append(capital).toString
-    
+
     labelCapital.setText(getCaptialText())
-    
+
   }
 
 }

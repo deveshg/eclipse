@@ -17,6 +17,8 @@ class Entreprise extends Node {
   }
   def getCapital(): Int = this.capital
 
+  override def clone(): Entreprise = ???
+
 }
 
 object Entreprise {

@@ -27,12 +27,21 @@ import org.eclipse.swt.widgets.Control
 import org.eclipse.ui.actions.ActionFactory
 import org.eclipse.ui.part.IPageSite
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage
-
 import com.github.eclipse.gef.example.editor.parts.AppEditPartFactory
 import com.github.eclipse.gef.example.editor.parts.tree.AppTreeEditPartFactory
 import com.github.eclipse.gef.example.util.EntrepriseData
+import org.eclipse.gef.ui.parts.GraphicalEditorWithPalette
+import org.eclipse.gef.palette.PaletteRoot
+import org.eclipse.gef.palette.PaletteGroup
+import org.eclipse.gef.palette.SelectionToolEntry
+import org.eclipse.gef.palette.MarqueeToolEntry
+import org.eclipse.gef.palette.CreationToolEntry
+import com.github.eclipse.gef.example.editor.requests.NodeCreationFactory
+import com.github.eclipse.gef.example.editor.model.Service
+import com.github.eclipse.gef.example.editor.model.Employe
+import org.eclipse.gef.dnd.TemplateTransferDragSourceListener
 
-class MyEditor extends GraphicalEditor {
+class MyEditor extends GraphicalEditorWithPalette {
 
   var model = EntrepriseData.getFakeEnterprise()
   var keyHandler: KeyHandler = _
@@ -46,6 +55,13 @@ class MyEditor extends GraphicalEditor {
   protected def initializeGraphicalViewer(): Unit = {
     val viewer = getGraphicalViewer()
     viewer.setContents(model)
+    viewer.addDropTargetListener(new MyTemplateTransferDropTargetListener(viewer))
+  }
+
+  protected override def initializePaletteViewer(): Unit = {
+    super.initializePaletteViewer()
+    getPaletteViewer().addDragSourceListener(
+      new TemplateTransferDragSourceListener(getPaletteViewer()));
   }
 
   protected override def configureGraphicalViewer(): Unit = {
@@ -149,6 +165,9 @@ class MyEditor extends GraphicalEditor {
       bars.setGlobalActionHandler(ActionFactory.DELETE.getId(),
         getActionRegistry().getAction(ActionFactory.DELETE.getId()));
       bars.updateActionBars();
+      bars.setGlobalActionHandler(ActionFactory.NEW.getId(),
+        getActionRegistry().getAction(ActionFactory.NEW.getId()));
+      bars.updateActionBars();
 
       getViewer().setKeyHandler(keyHandler);
 
@@ -191,6 +210,28 @@ class MyEditor extends GraphicalEditor {
       super.dispose();
     }
 
+  }
+
+  protected override def getPaletteRoot(): PaletteRoot = {
+
+    val paletteRoot = new PaletteRoot
+
+    val paletteGroup = new PaletteGroup("My Palette")
+    val selectionToolEntry = new SelectionToolEntry()
+    paletteGroup.add(selectionToolEntry);
+    paletteGroup.add(new MarqueeToolEntry());
+    paletteRoot.add(paletteGroup)
+
+    val myPaletteGroup = new PaletteGroup("My Palette Tools")
+    myPaletteGroup.add(new CreationToolEntry("Service", "Create a new Service",
+      new NodeCreationFactory(classOf[Service]), null, null))
+    myPaletteGroup.add(new CreationToolEntry("Employe", "Create a new Employe",
+      new NodeCreationFactory(classOf[Employe]), null, null))
+    paletteRoot.add(myPaletteGroup)
+
+    paletteRoot.setDefaultEntry(selectionToolEntry);
+
+    return paletteRoot
   }
 
 }

@@ -7,6 +7,11 @@ class Service extends Node {
   private var etage: Int = _
   private var color: Color = _
 
+  {
+    setEtage(0)
+    setColor(Service.getRandomColor)
+  }
+
   def setEtage(newEtage: Int): Unit = {
     val oldEtage = this.etage
     this.etage = newEtage
@@ -20,6 +25,14 @@ class Service extends Node {
     getListeners().firePropertyChange(Service.PROPERTY_COLOR, oldColor, newColor);
   }
   def getColor(): Color = this.color
+
+  override def clone(): Service = {
+    val service = new Service
+    service.setColor(getColor())
+    service.setEtage(getEtage())
+    copyPropertyToClone(service)
+    return service
+  }
 
 }
 

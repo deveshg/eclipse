@@ -7,13 +7,17 @@ import org.eclipse.core.runtime.IAdaptable
 import org.eclipse.draw2d.geometry.Rectangle
 import org.eclipse.ui.views.properties.IPropertySource
 
-class Node extends IAdaptable {
+abstract class Node extends IAdaptable with Cloneable {
 
   import Node._
 
-  private var name: String = "Unknown" //$NON-NLS-1$
+  private var name: String = _
   private var layout: Rectangle = new Rectangle(10, 10, 100, 100)
   private var listeners = new PropertyChangeSupport(this);
+
+  {
+    setName("Unknown") //$NON-NLS-1$
+  }
 
   private var parent: Node = null
   private var children = new java.util.ArrayList[Node]
@@ -57,6 +61,8 @@ class Node extends IAdaptable {
 
   def getChildrenArray(): java.util.List[Node] = this.children
 
+  def contains(node: Node): Boolean = this.children.contains(node)
+
   def addPropertyChangeListener(listener: PropertyChangeListener) =
     listeners.addPropertyChangeListener(listener)
 
@@ -72,6 +78,12 @@ class Node extends IAdaptable {
       return propertySource
     } else
       return null
+  }
+
+  protected def copyPropertyToClone(node: Node): Unit = {
+    node.setName(getName)
+    node.setParent(getParent)
+    node.setLayout(new Rectangle(layout.x + 10, layout.y + 10, layout.width, layout.height))
   }
 
 }
