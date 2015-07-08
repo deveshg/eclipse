@@ -11,12 +11,14 @@ import com.github.eclipse.opm.model.OPMObjectProcessDiagram
 import com.github.eclipse.opm.model.OPMThing
 import com.github.eclipse.opm.diagram.policies.OPMObjectProcessDiagramXYLayoutPolicy
 import org.eclipse.gef.EditPolicy
-
+import org.eclipse.emf.common.notify.Notifier
+import org.eclipse.emf.common.notify.Notification
+import org.eclipse.emf.common.notify.Adapter
 
 class ObjectProcessDiagramEditPart extends AbstractGraphicalEditPart {
 
-  var  adapter = new OPMObjectProcessDiagramAdapter
-  
+  var adapter = new OPMObjectProcessDiagramAdapter
+
   protected override def createEditPolicies(): Unit = {
     installEditPolicy(EditPolicy.LAYOUT_ROLE, new OPMObjectProcessDiagramXYLayoutPolicy());
   }
@@ -35,20 +37,26 @@ class ObjectProcessDiagramEditPart extends AbstractGraphicalEditPart {
     objects.addAll(opd.getThings())
     return objects
   }
-  
-  override def activate() : Unit ={
-    if(!isActive()) {
+
+  override def activate(): Unit = {
+    if (!isActive()) {
       getModel().asInstanceOf[OPMObjectProcessDiagram].eAdapters().add(adapter);
     }
     super.activate();
   }
- 
-  override def deactivate() : Unit = {
-    if(isActive()) {
+
+  override def deactivate(): Unit = {
+    if (isActive()) {
       getModel().asInstanceOf[OPMObjectProcessDiagram].eAdapters().remove(adapter);
     }
     super.deactivate();
   }
-  
-  
+
+  class OPMObjectProcessDiagramAdapter extends Adapter {
+    def getTarget(): Notifier = getModel().asInstanceOf[OPMObjectProcessDiagram]
+    def isAdapterForType(adapter: Any): Boolean = ???
+    def notifyChanged(x$1: Notification): Unit = refreshChildren()
+    def setTarget(x$1: Notifier): Unit = {}
+  }
+
 }
