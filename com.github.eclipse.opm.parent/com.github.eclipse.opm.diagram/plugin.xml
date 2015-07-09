@@ -5,6 +5,7 @@
          point="org.eclipse.ui.editors">
       <editor
             class="com.github.eclipse.opm.diagram.OPMDiagramEditor"
+            contributorClass="com.github.eclipse.opm.diagram. "
             default="false"
             extensions="opm"
             id="com.github.eclipse.opm.diagram.editor1"

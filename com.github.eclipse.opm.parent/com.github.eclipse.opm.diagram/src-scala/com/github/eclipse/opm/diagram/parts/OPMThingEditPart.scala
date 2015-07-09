@@ -12,6 +12,7 @@ import org.eclipse.gef.EditPolicy
 import org.eclipse.gef.Request
 import org.eclipse.gef.RequestConstants
 import org.eclipse.jface.viewers.TextCellEditor
+import com.github.eclipse.opm.diagram.policies.OPMThingComponentEditPolicy
 
 abstract class OPMThingEditPart extends AbstractGraphicalEditPart {
 
@@ -19,6 +20,7 @@ abstract class OPMThingEditPart extends AbstractGraphicalEditPart {
 
   protected override def createEditPolicies(): Unit = {
     installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new OPMThingDirectEditPolicy());
+    installEditPolicy(EditPolicy.COMPONENT_ROLE, new OPMThingComponentEditPolicy());  
   }
 
   protected override def refreshVisuals(): Unit = {
