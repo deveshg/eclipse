@@ -7,10 +7,19 @@ import org.eclipse.draw2d.geometry.Rectangle
 import org.eclipse.emf.common.notify.Adapter
 import org.eclipse.emf.common.notify.Notifier
 import org.eclipse.emf.common.notify.Notification
+import com.github.eclipse.opm.diagram.policies.OPMThingDirectEditPolicy
+import org.eclipse.gef.EditPolicy
+import org.eclipse.gef.Request
+import org.eclipse.gef.RequestConstants
+import org.eclipse.jface.viewers.TextCellEditor
 
 abstract class OPMThingEditPart extends AbstractGraphicalEditPart {
 
   val adapter: Adapter = new OPMThingAdapter
+
+  protected override def createEditPolicies(): Unit = {
+    installEditPolicy(EditPolicy.DIRECT_EDIT_ROLE, new OPMThingDirectEditPolicy());
+  }
 
   protected override def refreshVisuals(): Unit = {
 
@@ -25,7 +34,28 @@ abstract class OPMThingEditPart extends AbstractGraphicalEditPart {
       model.getConstraints().width, model.getConstraints().height)
     parent.setLayoutConstraint(this, figure, layout);
   }
-  
+
+  override def activate(): Unit = {
+    if (!isActive())
+      getModel().asInstanceOf[OPMThing].eAdapters().add(adapter)
+  }
+
+  override def deactivate(): Unit = {
+    if (isActive())
+      getModel().asInstanceOf[OPMThing].eAdapters().remove(adapter)
+  }
+
+  override def performRequest(req: Request) {
+    if (req.getType() == RequestConstants.REQ_DIRECT_EDIT) {
+      performDirectEditing();
+    }
+  }
+
+  private def performDirectEditing() {
+    val label = getFigure().asInstanceOf[OPMThingFigure].getNameLabel()
+    val manager = new OPMThingDirectEditManager(this, classOf[TextCellEditor], new OPMThingCellEditorLocator(label), label);
+    manager.show();
+  }
 
   class OPMThingAdapter extends Adapter {
     def getTarget(): Notifier = getModel().asInstanceOf[OPMThing]
@@ -33,4 +63,5 @@ abstract class OPMThingEditPart extends AbstractGraphicalEditPart {
     def notifyChanged(x$1: Notification): Unit = refreshVisuals()
     def setTarget(x$1: Notifier): Unit = {}
   }
+
 }

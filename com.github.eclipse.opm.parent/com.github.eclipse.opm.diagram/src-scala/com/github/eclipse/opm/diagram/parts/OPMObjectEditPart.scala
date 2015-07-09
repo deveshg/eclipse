@@ -9,7 +9,9 @@ import org.eclipse.draw2d.geometry.Rectangle
 
 class OPMObjectEditPart extends OPMThingEditPart {
 
-  protected override def createEditPolicies(): Unit = {}
+  protected override def createEditPolicies(): Unit = { 
+    super.createEditPolicies()
+  }
 
   protected override def createFigure(): IFigure = new OPMObjectFigure
 
