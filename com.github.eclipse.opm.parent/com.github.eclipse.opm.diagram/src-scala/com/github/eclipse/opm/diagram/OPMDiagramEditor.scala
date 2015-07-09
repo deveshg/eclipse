@@ -22,15 +22,16 @@ import com.github.eclipse.opm.model.OPMObjectProcessDiagram
 
 class OPMDiagramEditor extends GraphicalEditorWithFlyoutPalette {
 
-  var opd : OPMObjectProcessDiagram = _
-  var opdResource : Resource = _
+  var opd: OPMObjectProcessDiagram = _
+  var opdResource: Resource = _ 
+  
   {
     setEditDomain(new DefaultEditDomain(this));
   }
 
   override def doSave(pm: IProgressMonitor): Unit = {}
 
-  def getPaletteRoot(): PaletteRoot = null
+  def getPaletteRoot(): PaletteRoot = new OPMGraphicalEditorPalette
 
   protected override def initializeGraphicalViewer(): Unit = {
     super.initializeGraphicalViewer();
@@ -43,24 +44,28 @@ class OPMDiagramEditor extends GraphicalEditorWithFlyoutPalette {
   }
 
   @throws[PartInitException]
-  override def init(site :IEditorSite ,  input :IEditorInput)  {
-  super.init(site, input);
-   
-  OPMPackage.eINSTANCE.eClass(); // This initializes the OPMPackage singleton implementation.
-  val resourceSet = new ResourceSetImpl();
-  if(input.isInstanceOf[IFileEditorInput]) {
-    val fileInput =  input.asInstanceOf[IFileEditorInput];
-    val file = fileInput.getFile();
-    opdResource = resourceSet.createResource(URI.createURI(file.getLocationURI().toString()));
-    try {
-      opdResource.load(null);
-      opd =  opdResource.getContents().get(0).asInstanceOf[OPMObjectProcessDiagram];
-    } catch {
-      case e: IOException =>
-      e.printStackTrace();
-      opdResource = null;
+  override def init(site: IEditorSite, input: IEditorInput) {
+    super.init(site, input);
+    loadInput(input)
+  }
+
+  private def loadInput(input: IEditorInput): Unit = {
+
+    OPMPackage.eINSTANCE.eClass(); // This initializes the OPMPackage singleton implementation.
+    val resourceSet = new ResourceSetImpl();
+    if (input.isInstanceOf[IFileEditorInput]) {
+      val fileInput = input.asInstanceOf[IFileEditorInput];
+      val file = fileInput.getFile();
+      opdResource = resourceSet.createResource(URI.createURI(file.getLocationURI().toString()));
+      try {
+        opdResource.load(null);
+        opd = opdResource.getContents().get(0).asInstanceOf[OPMObjectProcessDiagram];
+      } catch {
+        case e: IOException =>
+          e.printStackTrace();
+          opdResource = null;
+      }
     }
   }
-}
-  
+
 }

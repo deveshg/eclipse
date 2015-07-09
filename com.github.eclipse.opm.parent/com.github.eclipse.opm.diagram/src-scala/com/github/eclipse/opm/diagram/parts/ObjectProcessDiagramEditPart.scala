@@ -38,6 +38,9 @@ class ObjectProcessDiagramEditPart extends AbstractGraphicalEditPart {
     return objects
   }
 
+  /**
+   *  @see EditPart#activate()
+   */
   override def activate(): Unit = {
     if (!isActive()) {
       getModel().asInstanceOf[OPMObjectProcessDiagram].eAdapters().add(adapter);
@@ -54,7 +57,7 @@ class ObjectProcessDiagramEditPart extends AbstractGraphicalEditPart {
 
   class OPMObjectProcessDiagramAdapter extends Adapter {
     def getTarget(): Notifier = getModel().asInstanceOf[OPMObjectProcessDiagram]
-    def isAdapterForType(adapter: Any): Boolean = ???
+    def isAdapterForType(adapter: Any): Boolean = adapter == classOf[OPMObjectProcessDiagram]
     def notifyChanged(x$1: Notification): Unit = refreshChildren()
     def setTarget(x$1: Notifier): Unit = {}
   }
